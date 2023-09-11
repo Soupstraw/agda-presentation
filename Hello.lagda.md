@@ -2,16 +2,21 @@
 % Joosep Jääger
 % September 13, 2022
 
-## Recommended reading
-
- - [Programming Language Foundations in Agda by Philip Wadler](https://plfa.github.io/)
- - [Propositions as Types by Philip Wadler](https://www.youtube.com/watch?v=IOiZatlZtGU)
-
 ## Follow along
 
 <https://agdapad.quasicoherent.io/>
 
 <https://github.com/Soupstraw/agda-presentation>
+
+## Talk overview
+
+ - Syntax overview
+ - Implementing some functions
+ - Little bit of theory
+ - Proving properties
+
+I'm assuming you have intermediate knowledge of Haskell and little to no 
+experience with proof assistants.
 
 ## Imports
 
@@ -42,6 +47,8 @@ double x = x + x
 ## Mixfix operators
 
 ```agda
+infixr 5 _²
+
 -- NB! Whitespace between the variable and the operator is mandatory!
 
 -- \^2    ²
@@ -118,25 +125,25 @@ reverse [] = []
 reverse (x ∷ xs) = reverse xs ++ ⟦ x ⟧
 ```
 
-## The problem
+. . .
 
 ```agda
--- Our `reverse` isn't the only function that inhabits this type:
+-- Will the real `reverse` please stand up?
 
 mystery1 : ∀ {A} → List A → List A
-mystery1 x = []
+mystery1 x = x
 
 mystery2 : ∀ {A} → List A → List A
-mystery2 x = x
+mystery2 [] = []
+mystery2 (x ∷ xs) = xs ++ ⟦ x ⟧
 
 mystery3 : ∀ {A} → List A → List A
-mystery3 [] = []
-mystery3 (x ∷ xs) = xs ++ ⟦ x ⟧
+mystery3 x = []
 ```
 
 -----
 
-We have to constrain `reverse` so we can be sure what it says it does
+We have to constrain `reverse` so we can be sure it does what it says
 
 . . .
 
@@ -156,6 +163,13 @@ What does it mean to prove something about our program?
 | Either P Q    | P ⊎ Q       | P ∨ Q              |
 | P -> Q        | P → Q       | P ⊃ Q              |
 
+<!--
+-----
+
+$$
+\begin{prooftree}\AxiomC{A}\AxiomC{B}\BinaryInfC{C}\end{prooftree}
+$$
+-->
 -----
 
 Types are propositions
@@ -174,6 +188,25 @@ Propositional equality is denoted by `_≡_`.
 
 It has a single constructor `refl : A ≡ A`
 
+. . .
+
+We can use that constructor only if Agda can unify both sides of the equality
+
+. . .
+
+Doing a case analysis on `refl` substitutes one side of the equality for the other
+
+## Dependently typed
+
+Agda is dependently typed, meaning that anything we define can be used at value level, type level, kind level, etc.
+
+```agda
+_ : double 2 ≡ 2 ²
+_ = refl
+
+-- double 2 ≡ 2 * 2 ≡ 4
+-- 2 ²      = 2 * 2 = 4
+```
 
 ## Transitivity
 
@@ -235,4 +268,22 @@ reverse-++ (x ∷ x₁) y rewrite sym (++-assoc (reverse y) (reverse x₁) ⟦ x
   cong (_++ ⟦ x ⟧) (reverse-++ x₁ y)
 ```
 
+-----
+
+    mystery1 : ∀ {A} → List A → List A
+    mystery1 x = x
+    
+    mystery2 : ∀ {A} → List A → List A
+    mystery2 [] = []
+    mystery2 (x ∷ xs) = xs ++ ⟦ x ⟧
+    
+    mystery3 : ∀ {A} → List A → List A
+    mystery3 x = []
+
+## Recommended literature
+
+ - ["Programming Language Foundations in Agda" by Philip Wadler](https://plfa.github.io/)
+ - ["Propositions as Types" talk by Philip Wadler](https://www.youtube.com/watch?v=IOiZatlZtGU)
+
+## Questions?
 

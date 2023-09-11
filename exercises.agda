@@ -1,6 +1,44 @@
-open import Relation.Binary.PropositionalEquality
+open import Relation.Binary.PropositionalEquality using (_≡_)
+
+trans : ∀ {P Q R : Set} → P ≡ Q → Q ≡ R → P ≡ R
+trans = {!!}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 open import Agda.Builtin.Nat renaming (Nat to ℕ)
-open import Agda.Builtin.Bool using (Bool; true; false)
+open import Agda.Builtin.Bool
 open import Agda.Builtin.String
 
 data List A : Set where
@@ -13,20 +51,15 @@ infixr 30 _∷_
 ⟦_⟧ = _∷ []
 
 _++_ : ∀ {A} → List A → List A → List A
-xs ++ ys = {!!}
-
-
-
-
-
-
-
-
-
-
+[] ++ ys = ys
+(x ∷ xs) ++ ys = x ∷ (xs ++ ys)
 
 reverse : ∀ {A} → List A → List A
-reverse xs = {!!}
+reverse [] = []
+reverse (x ∷ xs) = reverse xs ++ ⟦ x ⟧
+
+-- []-++-right-unit : ∀ {A} {xs : List A} → xs ≡ xs ++ []
+-- []-++-right-unit = {!!}
 
 
 
@@ -39,8 +72,6 @@ reverse xs = {!!}
 
 
 
-[]-++-right-unit : ∀ {A} {xs : List A} → xs ≡ xs ++ []
-[]-++-right-unit = {!!}
 
 
 
@@ -53,8 +84,12 @@ reverse xs = {!!}
 
 
 
-++-assoc : ∀ {A} (xs ys zs : List A) → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
-++-assoc xs ys zs = {!!}
+
+
+
+
+-- ++-assoc : ∀ {A} (xs ys zs : List A) → (xs ++ ys) ++ zs ≡ xs ++ (ys ++ zs)
+-- ++-assoc xs ys zs = {!!}
 
 
 
@@ -67,6 +102,17 @@ reverse xs = {!!}
 
 
 
-reverse-++ : ∀ {A} (xs ys : List A)
-  → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
-reverse-++ xs ys = {!!}
+
+
+
+
+
+
+
+
+
+
+
+-- reverse-++ : ∀ {A} (xs ys : List A)
+--   → reverse (xs ++ ys) ≡ reverse ys ++ reverse xs
+-- reverse-++ xs ys = {!!}
