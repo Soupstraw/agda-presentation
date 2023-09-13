@@ -18,21 +18,11 @@
 I'm assuming you have intermediate knowledge of Haskell and little to no 
 experience with proof assistants.
 
-## Imports
-
-```agda
--- `open import` is the same as a regular import in Haskell
-open import Relation.Binary.PropositionalEquality
-open import Agda.Builtin.Nat renaming (Nat to ℕ)
-
--- Notice the use of semicolon when importing with `using` syntax
-open import Agda.Builtin.Bool using (Bool; true; false)
-open import Agda.Builtin.String
-```
-
 ## Familiar syntax
 
 ```agda
+open import Agda.Builtin.Nat renaming (Nat to ℕ)
+
 -- Notice the single colon instead of Haskell's double colon.
 -- The function arrows are unicode
 
@@ -60,6 +50,8 @@ x ² = x * x
 ## 90% Less sugar*
 
 ```agda
+open import Agda.Builtin.Bool using (Bool; true; false)
+
 -- If-then-else can be written as a function, no need for syntactic sugar
 if_then_else_ : {A : Set} → Bool → A → A → A
 if true then x else _ = x
@@ -86,6 +78,8 @@ someList = 1 ∷ 2 ∷ []
 ## Records
 
 ```agda
+open import Agda.Builtin.String
+
 record Person : Set where
   -- `constructor` is optional
   constructor _,age_
@@ -174,7 +168,7 @@ $$
 
 Types are propositions
 
-Proofs are programs
+Programs are proofs
 
 . . .
 
@@ -201,6 +195,8 @@ Doing a case analysis on `refl` substitutes one side of the equality for the oth
 Agda is dependently typed, meaning that anything we define can be used at value level, type level, kind level, etc.
 
 ```agda
+open import Relation.Binary.PropositionalEquality
+
 _ : double 2 ≡ 2 ²
 _ = refl
 

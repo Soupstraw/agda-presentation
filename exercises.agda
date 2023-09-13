@@ -3,40 +3,6 @@ open import Relation.Binary.PropositionalEquality using (_≡_)
 trans : ∀ {P Q R : Set} → P ≡ Q → Q ≡ R → P ≡ R
 trans = {!!}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 open import Agda.Builtin.Nat renaming (Nat to ℕ)
 open import Agda.Builtin.Bool
 open import Agda.Builtin.String
